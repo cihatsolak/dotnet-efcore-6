@@ -15,7 +15,7 @@ using (var _context = new AppDbContext())
         {
             Console.WriteLine(e.State);
         }
-    });
+    }); 
 
     _context.SaveChanges();
 

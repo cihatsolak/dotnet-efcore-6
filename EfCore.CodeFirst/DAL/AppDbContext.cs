@@ -11,6 +11,13 @@
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>().Property(p => p.Name).HasMaxLength(100).IsFixedLength();
+
+            base.OnModelCreating(modelBuilder);
+        }
+
         public override int SaveChanges()
         {
             ChangeTracker.Entries().ToList().ForEach(e =>
