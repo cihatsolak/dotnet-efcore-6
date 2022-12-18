@@ -7,5 +7,6 @@
         public int Section { get; set; }
 
         public Product Product { get; set; }
+
     }
 }
