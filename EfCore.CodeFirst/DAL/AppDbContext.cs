@@ -13,7 +13,11 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>().HasKey(p => p.Id);
+            modelBuilder.Entity<ProductFeature>().HasKey(p => p.Id);
+            modelBuilder.Entity<Product>().HasOne(p => p.ProductFeature).WithOne(p => p.Product).HasForeignKey<ProductFeature>(p => p.Id);
             modelBuilder.Entity<Product>().Property(p => p.Name).HasMaxLength(100).IsFixedLength();
+
 
             base.OnModelCreating(modelBuilder);
         }

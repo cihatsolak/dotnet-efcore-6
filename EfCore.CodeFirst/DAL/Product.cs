@@ -10,5 +10,7 @@
         public DateTime? CreatedDate { get; set; }
 
         public int Barcode { get; set; }
+
+        public ProductFeature ProductFeature { get; set; }
     }
 }
