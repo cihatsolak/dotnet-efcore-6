@@ -36,6 +36,9 @@ namespace EfCore.CodeFirst.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("Kdv")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nchar(100)")
@@ -43,6 +46,11 @@ namespace EfCore.CodeFirst.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SalesPrice")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("int")
+                        .HasComputedColumnSql("[Price]*[Kdv]");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");

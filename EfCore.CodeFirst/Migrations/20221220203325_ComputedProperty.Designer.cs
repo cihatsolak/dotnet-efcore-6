@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EfCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221218204255_StudentTeacherTable")]
-    partial class StudentTeacherTable
+    [Migration("20221220203325_ComputedProperty")]
+    partial class ComputedProperty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,9 @@ namespace EfCore.CodeFirst.Migrations
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("Kdv")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nchar(100)")
@@ -46,6 +49,11 @@ namespace EfCore.CodeFirst.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SalesPrice")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("int")
+                        .HasComputedColumnSql("[Price]*[Kdv]");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");

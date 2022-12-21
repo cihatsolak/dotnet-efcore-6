@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EfCore.CodeFirst.Migrations
 {
     /// <inheritdoc />
-    public partial class StudentTeacherTable : Migration
+    public partial class ComputedProperty : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,6 +20,8 @@ namespace EfCore.CodeFirst.Migrations
                     Name = table.Column<string>(type: "nchar(100)", fixedLength: true, maxLength: 100, nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
+                    SalesPrice = table.Column<int>(type: "int", nullable: false, computedColumnSql: "[Price]*[Kdv]"),
+                    Kdv = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Barcode = table.Column<int>(type: "int", nullable: false)
                 },

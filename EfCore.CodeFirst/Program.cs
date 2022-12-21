@@ -3,19 +3,24 @@
 using (var _context = new AppDbContext())
 {
     var products = _context.Products.ToList();
+}
+
+using (var _context = new AppDbContext())
+{
+    var products = _context.Products.ToList();
 
     products.ForEach(p =>
     {
         p.Stock += 100;
     });
-    
+
     _context.ChangeTracker.Entries().ToList().ForEach(e =>
     {
         if (e.Entity is Product p)
         {
             Console.WriteLine(e.State);
         }
-    }); 
+    });
 
     _context.SaveChanges();
 

@@ -17,6 +17,11 @@
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
+
+            //modelBuilder.Entity<Product>().Property(p => p.SalesPrice).ValueGeneratedOnAddOrUpdate().HasComputedColumnSql("[Price]*[Kdv]"); //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+            //modelBuilder.Entity<Product>().Property(p => p.CreatedDate).ValueGeneratedOnAdd(); //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            //modelBuilder.Entity<Product>().Property(p => p.Id).ValueGeneratedNever(); //[DatabaseGenerated(DatabaseGeneratedOption.None)]
+
             modelBuilder.Entity<ProductFeature>().HasKey(p => p.Id);
             modelBuilder.Entity<Product>().HasOne(p => p.ProductFeature).WithOne(p => p.Product).HasForeignKey<ProductFeature>(p => p.Id);
             modelBuilder.Entity<Product>().Property(p => p.Name).HasMaxLength(100).IsFixedLength();
@@ -26,8 +31,8 @@
                 .HasMany(p => p.Teachers)
                 .WithMany(p => p.Students)
                 .UsingEntity<Dictionary<string, object>>("StudentTeacher",
-                x => x.HasOne<Teacher>().WithMany().HasForeignKey("TeacherId").HasConstraintName("FK_TeacherId"),
-                x => x.HasOne<Student>().WithMany().HasForeignKey("StudentId").HasConstraintName("FK_StudentId")
+                    x => x.HasOne<Teacher>().WithMany().HasForeignKey("TeacherId").HasConstraintName("FK_TeacherId"),
+                    x => x.HasOne<Student>().WithMany().HasForeignKey("StudentId").HasConstraintName("FK_StudentId")
                 );
 
             base.OnModelCreating(modelBuilder);
