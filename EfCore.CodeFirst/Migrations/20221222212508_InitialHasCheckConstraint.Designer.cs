@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EfCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221220203325_ComputedProperty")]
-    partial class ComputedProperty
+    [Migration("20221222212508_InitialHasCheckConstraint")]
+    partial class InitialHasCheckConstraint
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,7 @@ namespace EfCore.CodeFirst.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedDate")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Kdv")
@@ -50,17 +51,23 @@ namespace EfCore.CodeFirst.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("SalesPrice")
+                    b.Property<decimal>("SalesPrice")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int")
-                        .HasComputedColumnSql("[Price]*[Kdv]");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Id", "SalesPrice");
+
+                    b.ToTable("Products", t =>
+                        {
+                            t.HasCheckConstraint("ProductSalesPriceCheck", "[Price]>[SalesPrice]");
+                        });
                 });
 
             modelBuilder.Entity("EfCore.CodeFirst.DAL.ProductFeature", b =>

@@ -34,6 +34,7 @@ namespace EfCore.CodeFirst.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedDate")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Kdv")
@@ -47,17 +48,23 @@ namespace EfCore.CodeFirst.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("SalesPrice")
+                    b.Property<decimal>("SalesPrice")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int")
-                        .HasComputedColumnSql("[Price]*[Kdv]");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Id", "SalesPrice");
+
+                    b.ToTable("Products", t =>
+                        {
+                            t.HasCheckConstraint("ProductSalesPriceCheck", "[Price]>[SalesPrice]");
+                        });
                 });
 
             modelBuilder.Entity("EfCore.CodeFirst.DAL.ProductFeature", b =>

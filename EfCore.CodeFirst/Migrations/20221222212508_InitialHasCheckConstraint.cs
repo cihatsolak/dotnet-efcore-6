@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EfCore.CodeFirst.Migrations
 {
     /// <inheritdoc />
-    public partial class ComputedProperty : Migration
+    public partial class InitialHasCheckConstraint : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace EfCore.CodeFirst.Migrations
                     Name = table.Column<string>(type: "nchar(100)", fixedLength: true, maxLength: 100, nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
-                    SalesPrice = table.Column<int>(type: "int", nullable: false, computedColumnSql: "[Price]*[Kdv]"),
+                    SalesPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Kdv = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Barcode = table.Column<int>(type: "int", nullable: false)
@@ -28,6 +28,7 @@ namespace EfCore.CodeFirst.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                    table.CheckConstraint("ProductSalesPriceCheck", "[Price]>[SalesPrice]");
                 });
 
             migrationBuilder.CreateTable(
@@ -100,6 +101,16 @@ namespace EfCore.CodeFirst.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_Id",
+                table: "Products",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_Id_SalesPrice",
+                table: "Products",
+                columns: new[] { "Id", "SalesPrice" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentTeacher_TeacherId",

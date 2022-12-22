@@ -21,6 +21,12 @@
             modelBuilder.Entity<Product>().Property(p => p.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Product>().Property(p => p.CreatedDate).ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<Product>().HasIndex(x => x.Id); //Normal index
+            modelBuilder.Entity<Product>().HasIndex(x => new { x.Id, x.SalesPrice }); //composite index
+
+            modelBuilder.Entity<Product>().ToTable(x => x.HasCheckConstraint("ProductSalesPriceCheck", "[Price]>[SalesPrice]"));
+            //modelBuilder.Entity<Product>().HasCheckConstraint("ProductSalesPriceCheck", "[Price]>[SalesPrice]"); //HasCheckConstraint (Eski Yöntem)
+
             //modelBuilder.Entity<Product>().Property(p => p.SalesPrice).ValueGeneratedOnAddOrUpdate().HasComputedColumnSql("[Price]*[Kdv]"); //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
             //modelBuilder.Entity<Product>().Property(p => p.CreatedDate).ValueGeneratedOnAdd(); //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             //modelBuilder.Entity<Product>().Property(p => p.Id).ValueGeneratedNever(); //[DatabaseGenerated(DatabaseGeneratedOption.None)]
