@@ -4,7 +4,7 @@ namespace EfCore.CodeFirst.DAL
 {
     public class Product
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }

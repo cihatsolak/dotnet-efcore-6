@@ -11,12 +11,15 @@
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Initializer.Build();
+            optionsBuilder.LogTo(Console.WriteLine);
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
+            modelBuilder.Entity<Product>().Property(p => p.Id).UseIdentityColumn(1, 1);
+            modelBuilder.Entity<Product>().Property(p => p.CreatedDate).ValueGeneratedOnAdd();
 
             //modelBuilder.Entity<Product>().Property(p => p.SalesPrice).ValueGeneratedOnAddOrUpdate().HasComputedColumnSql("[Price]*[Kdv]"); //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
             //modelBuilder.Entity<Product>().Property(p => p.CreatedDate).ValueGeneratedOnAdd(); //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
