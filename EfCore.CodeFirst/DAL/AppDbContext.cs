@@ -1,4 +1,6 @@
-﻿namespace EfCore.CodeFirst.DAL
+﻿using Microsoft.Extensions.Logging;
+
+namespace EfCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
@@ -11,7 +13,7 @@
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             Initializer.Build();
-            optionsBuilder.LogTo(Console.WriteLine);
+            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
         }
 

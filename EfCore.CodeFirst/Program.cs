@@ -2,11 +2,29 @@
 
 using (var _context = new AppDbContext())
 {
-    var product = _context.Products.AsNoTracking().First();
-    product.Name = "cihat";
+    var result = _context.Students.Join(_context.Teachers, student => student.Name, teacher => teacher.Name, (student, teacher) =>
+    new
+    {
+        StudentName = student.Name,
+        TeacherName = teacher.Name,
+        StudentAge = student.Age
+    }).ToList();
 
-    _context.Entry(product).State = EntityState.Modified;
-    _context.SaveChanges();
+    var result2 = (from students in _context.Students
+                   join teacher in _context.Teachers on students.Name equals teacher.Name
+                   select new
+                   {
+                       StudentName = students.Name,
+                       TeacherName = teacher.Name,
+                       StudentAge = students.Age
+                   }).ToList();
+
+
+    //var product = _context.Products.AsNoTracking().First();
+    //product.Name = "cihat";
+
+    //_context.Entry(product).State = EntityState.Modified;
+    //_context.SaveChanges();
 
     //_context.Entry(products).Reference(x => x.ProductFeature).Load();
 
