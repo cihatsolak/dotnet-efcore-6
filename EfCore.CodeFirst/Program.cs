@@ -6,10 +6,10 @@ Initializer.Build();
 using (var _context = new AppDbContext())
 {
 
-    var product = _context.Students.FromSqlRaw<Student>("select * from students where Age={0}", 2).First();
+    //var product = _context.Students.FromSqlRaw<Student>("select * from students where Age={0}", 2).First();
 
-    SqlParameter sqlParameter = new("age", 2);
-    var product2 = _context.Students.FromSqlInterpolated($"select * from students where Age={sqlParameter}").First();
+    //SqlParameter sqlParameter = new("age", 2);
+    //var product2 = _context.Students.FromSqlInterpolated($"select * from students where Age={sqlParameter}").First();
 
 
     //var result = _context.Students.Join(_context.Teachers, student => student.Name, teacher => teacher.Name, (student, teacher) =>
