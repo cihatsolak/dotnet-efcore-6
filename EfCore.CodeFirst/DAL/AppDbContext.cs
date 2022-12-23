@@ -15,6 +15,7 @@ namespace EfCore.CodeFirst.DAL
             Initializer.Build();
             optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
             optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); //global olarak tracking kapatma.
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
