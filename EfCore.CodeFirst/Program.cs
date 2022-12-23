@@ -6,6 +6,12 @@ Initializer.Build();
 using (var _context = new AppDbContext())
 {
 
+    
+    
+    //var student = _context.Students
+    //          .TagWith("Bu sorgu ürünlere ait 1 numaralı ürünleri getirir.")
+    //          .First(p => p.Id == 1);
+
     //var product = _context.Students.FromSqlRaw<Student>("select * from students where Age={0}", 2).First();
 
     //SqlParameter sqlParameter = new("age", 2);
