@@ -5,9 +5,12 @@ Initializer.Build();
 
 using (var _context = new AppDbContext())
 {
+    SqlParameter sqlParameter = new("id", 4);
+    var products = _context.Products.FromSqlRaw("exec sp_get_products_by_id {0}", 4).ToList();
+    var products2 = _context.Products.FromSqlInterpolated($"exec sp_get_products_by_id @id={sqlParameter}").ToList();
 
-    var products = _context.Products.FromSqlInterpolated($"exec sp_get_products").ToList();
-    var products2 = _context.Products.FromSqlRaw("exec sp_get_products").ToList();
+    //var products = _context.Products.FromSqlInterpolated($"exec sp_get_products").ToList();
+    //var products2 = _context.Products.FromSqlRaw("exec sp_get_products").ToList();
 
     //var student = _context.Students
     //          .TagWith("Bu sorgu ürünlere ait 1 numaralı ürünleri getirir.")
