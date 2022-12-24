@@ -6,8 +6,9 @@ Initializer.Build();
 using (var _context = new AppDbContext())
 {
 
-    
-    
+    var products = _context.Products.FromSqlInterpolated($"exec sp_get_products").ToList();
+    var products2 = _context.Products.FromSqlRaw("exec sp_get_products").ToList();
+
     //var student = _context.Students
     //          .TagWith("Bu sorgu ürünlere ait 1 numaralı ürünleri getirir.")
     //          .First(p => p.Id == 1);
