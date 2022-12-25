@@ -7,6 +7,7 @@ namespace EfCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<StudentTeacherFull> StudentTeacherFulls { get; set; }
 
 
         //Her Db işleminde buraya uğrayacaktır.
@@ -20,6 +21,9 @@ namespace EfCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<StudentTeacherFull>().HasNoKey().ToTable(p => p.ExcludeFromMigrations());
+            modelBuilder.Entity<StudentTeacherFull>().ToFunction("fc_student_teacher_full");
+
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
             modelBuilder.Entity<Product>().Property(p => p.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Product>().Property(p => p.CreatedDate).ValueGeneratedOnAdd();

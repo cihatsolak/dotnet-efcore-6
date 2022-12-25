@@ -121,6 +121,20 @@ namespace EfCore.CodeFirst.Migrations
                     b.ToTable("Teachers");
                 });
 
+            modelBuilder.Entity("EfCore.CodeFirst.DAL.Vehicle", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Plate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("Vehicles", t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
             modelBuilder.Entity("StudentTeacher", b =>
                 {
                     b.Property<int>("StudentId")

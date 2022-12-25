@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EfCore.CodeFirst.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialHasCheckConstraint : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
