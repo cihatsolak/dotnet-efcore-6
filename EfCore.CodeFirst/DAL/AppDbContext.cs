@@ -7,8 +7,8 @@ namespace EfCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
-        public DbSet<StudentTeacherFull> StudentTeacherFulls { get; set; }
-
+        //public DbSet<StudentTeacherFull> StudentTeacherFulls { get; set; }
+        public IQueryable<StudentTeacherFull> GetStudentTeacherFulls(int age) => FromExpression(() => GetStudentTeacherFulls(age));
 
         //Her Db işleminde buraya uğrayacaktır.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,6 +23,7 @@ namespace EfCore.CodeFirst.DAL
         {
             modelBuilder.Entity<StudentTeacherFull>().HasNoKey().ToTable(p => p.ExcludeFromMigrations());
             //modelBuilder.Entity<StudentTeacherFull>().ToFunction("fc_student_teacher_full");
+            modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetStudentTeacherFulls), new[] { typeof(int) })).HasName("fc_student_teacher_full_id");
 
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
             modelBuilder.Entity<Product>().Property(p => p.Id).UseIdentityColumn(1, 1);

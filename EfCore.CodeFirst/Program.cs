@@ -5,8 +5,13 @@ Initializer.Build();
 
 using(var _context = new AppDbContext())
 {
-    SqlParameter ageSqlParameter = new("age", 36);
-    var studentTeacherFull = _context.StudentTeacherFulls.FromSqlInterpolated($"select * from fc_student_teacher_full_id({ageSqlParameter})").ToList();
+    //Function 1.yol
+    //SqlParameter ageSqlParameter = new("age", 36);
+    //var studentTeacherFull = _context.StudentTeacherFulls.FromSqlInterpolated($"select * from fc_student_teacher_full_id({ageSqlParameter})").ToList();
+
+    //Function 2.Yol (temiz)
+    var studentTeacherFull = _context.GetStudentTeacherFulls(45).Where(p => p.StudentAge == 25).ToList();
+
 }
 
 using (var _context = new AppDbContext())
