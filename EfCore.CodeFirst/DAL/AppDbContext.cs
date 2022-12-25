@@ -7,6 +7,8 @@ namespace EfCore.CodeFirst.DAL
         public DbSet<Product> Products { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<StudentTotal> StudentTotals { get; set; }
+
         //public DbSet<StudentTeacherFull> StudentTeacherFulls { get; set; }
         public IQueryable<StudentTeacherFull> GetStudentTeacherFulls(int age) => FromExpression(() => GetStudentTeacherFulls(age));
         public int GetStudentCountByAge(int age)
@@ -25,6 +27,8 @@ namespace EfCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<StudentTotal>().HasNoKey().ToTable(p => p.ExcludeFromMigrations());
+
             modelBuilder.Entity<StudentTeacherFull>().HasNoKey().ToTable(p => p.ExcludeFromMigrations());
             //modelBuilder.Entity<StudentTeacherFull>().ToFunction("fc_student_teacher_full");
             modelBuilder.HasDbFunction(typeof(AppDbContext).GetMethod(nameof(GetStudentTeacherFulls), new[] { typeof(int) })).HasName("fc_student_teacher_full_id");

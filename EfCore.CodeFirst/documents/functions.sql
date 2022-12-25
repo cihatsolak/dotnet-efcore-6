@@ -33,3 +33,19 @@
 
 ------------
 
+-- parametreli (scaler-valued function)
+
+--create function fc_student_teacher_count(@age int)
+--returns int
+--as
+--begin
+--return (
+--select COUNT(*) from Students where Age=@age
+--)
+--end
+
+--select dbo.fc_student_teacher_count(70)
+
+------------
+
+

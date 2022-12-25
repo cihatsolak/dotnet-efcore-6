@@ -11,6 +11,10 @@ using (var _context = new AppDbContext())
         name = p.Name,
         studentCount = _context.GetStudentCountByAge(25)
     }).ToList();
+
+    //scaler-function 2.yol
+    SqlParameter ageSqlParameter = new("age", 25);
+    int total =_context.StudentTotals.FromSqlInterpolated($"select dbo.fc_student_teacher_count({ageSqlParameter}) as Total").First().Total;
 }
 
 using (var _context = new AppDbContext())
