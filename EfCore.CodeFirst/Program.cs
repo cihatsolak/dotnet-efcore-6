@@ -1,7 +1,16 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using AutoMapper.QueryableExtensions;
+using EfCore.CodeFirst.DTOs;
+using EfCore.CodeFirst.Mappers;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.Serialization;
 
 Initializer.Build();
+ 
+using (var _context = new AppDbContext())
+{
+    var productDtos = _context.Products.ProjectTo<ProductDto>(ObjectMapper.Mapper.ConfigurationProvider).ToList();
+}
 
 using (var _context = new AppDbContext())
 {
@@ -14,7 +23,7 @@ using (var _context = new AppDbContext())
 
     //scaler-function 2.yol
     SqlParameter ageSqlParameter = new("age", 25);
-    int total =_context.StudentTotals.FromSqlInterpolated($"select dbo.fc_student_teacher_count({ageSqlParameter}) as Total").First().Total;
+    int total = _context.StudentTotals.FromSqlInterpolated($"select dbo.fc_student_teacher_count({ageSqlParameter}) as Total").First().Total;
 }
 
 using (var _context = new AppDbContext())
