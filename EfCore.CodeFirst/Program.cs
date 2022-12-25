@@ -3,7 +3,17 @@ using Microsoft.EntityFrameworkCore;
 
 Initializer.Build();
 
-using(var _context = new AppDbContext())
+using (var _context = new AppDbContext())
+{
+    //scaler-function 1.yol
+    var products = _context.Products.Select(p => new
+    {
+        name = p.Name,
+        studentCount = _context.GetStudentCountByAge(25)
+    }).ToList();
+}
+
+using (var _context = new AppDbContext())
 {
     //Function 1.yol
     //SqlParameter ageSqlParameter = new("age", 36);
