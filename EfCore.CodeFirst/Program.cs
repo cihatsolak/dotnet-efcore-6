@@ -5,7 +5,8 @@ Initializer.Build();
 
 using(var _context = new AppDbContext())
 {
-    var studentTeacherFull = _context.StudentTeacherFulls.ToList();
+    SqlParameter ageSqlParameter = new("age", 36);
+    var studentTeacherFull = _context.StudentTeacherFulls.FromSqlInterpolated($"select * from fc_student_teacher_full_id({ageSqlParameter})").ToList();
 }
 
 using (var _context = new AppDbContext())

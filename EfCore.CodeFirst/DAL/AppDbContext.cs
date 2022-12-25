@@ -22,7 +22,7 @@ namespace EfCore.CodeFirst.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<StudentTeacherFull>().HasNoKey().ToTable(p => p.ExcludeFromMigrations());
-            modelBuilder.Entity<StudentTeacherFull>().ToFunction("fc_student_teacher_full");
+            //modelBuilder.Entity<StudentTeacherFull>().ToFunction("fc_student_teacher_full");
 
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
             modelBuilder.Entity<Product>().Property(p => p.Id).UseIdentityColumn(1, 1);
