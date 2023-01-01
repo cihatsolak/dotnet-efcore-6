@@ -8,6 +8,8 @@ namespace EfCore.CodeFirst.DAL
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<StudentTotal> StudentTotals { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
 
         //public DbSet<StudentTeacherFull> StudentTeacherFulls { get; set; }
         public IQueryable<StudentTeacherFull> GetStudentTeacherFulls(int age) => FromExpression(() => GetStudentTeacherFulls(age));
@@ -27,6 +29,8 @@ namespace EfCore.CodeFirst.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Vehicle>().HasOne(p => p.Brand).WithMany(p => p.Vehicles).HasForeignKey(p => p.BrandId).OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<StudentTotal>().HasNoKey().ToTable(p => p.ExcludeFromMigrations());
 
             modelBuilder.Entity<StudentTeacherFull>().HasNoKey().ToTable(p => p.ExcludeFromMigrations());

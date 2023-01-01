@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EfCore.CodeFirst.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221224221206_initial")]
-    partial class initial
+    [Migration("20221225143708_VehicleBrands")]
+    partial class VehicleBrands
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,22 @@ namespace EfCore.CodeFirst.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EfCore.CodeFirst.DAL.Brand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brands");
+                });
 
             modelBuilder.Entity("EfCore.CodeFirst.DAL.Product", b =>
                 {
@@ -105,6 +121,31 @@ namespace EfCore.CodeFirst.Migrations
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("EfCore.CodeFirst.DAL.StudentTeacherFull", b =>
+                {
+                    b.Property<int>("StudentAge")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TeacherClassName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("StudentTeacherFull", t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
+            modelBuilder.Entity("EfCore.CodeFirst.DAL.StudentTotal", b =>
+                {
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.ToTable("StudentTotals", t =>
+                        {
+                            t.ExcludeFromMigrations();
+                        });
+                });
+
             modelBuilder.Entity("EfCore.CodeFirst.DAL.Teacher", b =>
                 {
                     b.Property<int>("Id")
@@ -126,16 +167,26 @@ namespace EfCore.CodeFirst.Migrations
 
             modelBuilder.Entity("EfCore.CodeFirst.DAL.Vehicle", b =>
                 {
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Plate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Vehicles", t =>
-                        {
-                            t.ExcludeFromMigrations();
-                        });
+                    b.Property<string>("Year")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("StudentTeacher", b =>
@@ -164,6 +215,17 @@ namespace EfCore.CodeFirst.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("EfCore.CodeFirst.DAL.Vehicle", b =>
+                {
+                    b.HasOne("EfCore.CodeFirst.DAL.Brand", "Brand")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+                });
+
             modelBuilder.Entity("StudentTeacher", b =>
                 {
                     b.HasOne("EfCore.CodeFirst.DAL.Student", null)
@@ -179,6 +241,11 @@ namespace EfCore.CodeFirst.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_TeacherId");
+                });
+
+            modelBuilder.Entity("EfCore.CodeFirst.DAL.Brand", b =>
+                {
+                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("EfCore.CodeFirst.DAL.Product", b =>

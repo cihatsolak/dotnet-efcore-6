@@ -2,11 +2,35 @@
 using EfCore.CodeFirst.DTOs;
 using EfCore.CodeFirst.Mappers;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Runtime.Serialization;
 
 Initializer.Build();
- 
+
+using (var _context = new AppDbContext())
+{
+    using var transaction = _context.Database.BeginTransaction();
+
+    Brand brand = new()
+    {
+        Name = "Seat"
+    };
+
+    _context.Brands.Add(brand);
+    _context.SaveChanges();
+
+    Vehicle vehicle = new()
+    {
+        Plate = "06BEU013",
+        Year = "2018",
+        BrandId = 23
+    };
+
+    _context.Vehicles.Add(vehicle);
+    _context.SaveChanges();
+
+    transaction.Commit();
+}
+
+
 using (var _context = new AppDbContext())
 {
     var productDtos = _context.Products.ProjectTo<ProductDto>(ObjectMapper.Mapper.ConfigurationProvider).ToList();
