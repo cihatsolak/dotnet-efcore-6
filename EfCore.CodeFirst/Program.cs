@@ -1,54 +1,79 @@
-﻿using AutoMapper.QueryableExtensions;
-using EfCore.CodeFirst.DTOs;
-using EfCore.CodeFirst.Mappers;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Data.Common;
 
 Initializer.Build();
 
-using (var _context = new AppDbContext())
+DbConnection appDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("SqlCon"));
+DbConnection courseDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("CourseSqlCon"));
+
+using var _appDbContext = new AppDbContext(appDbConnection);
+using var appDbTransaction = _appDbContext.Database.BeginTransaction();
+
+_appDbContext.Brands.Add(new Brand
 {
-    using var transaction = _context.Database.BeginTransaction();
+    Name = "Transaction Model"
+});
 
-    Brand brand = new()
-    {
-        Name = "Seat"
-    };
+_appDbContext.SaveChanges();
 
-    _context.Brands.Add(brand);
-    _context.SaveChanges();
+using var _courseDbContext = new AppDbContext(appDbConnection);
+_courseDbContext.Database.UseTransaction(appDbTransaction.GetDbTransaction());
 
-    Vehicle vehicle = new()
-    {
-        Plate = "06BEU013",
-        Year = "2018",
-        BrandId = 23
-    };
+var course = _courseDbContext.Students.First();
+course.Name = "Transaction Mesut";
 
-    _context.Vehicles.Add(vehicle);
-    _context.SaveChanges();
+_courseDbContext.Students.Update(course);
+_courseDbContext.SaveChanges();
 
-    transaction.Commit();
-}
+appDbTransaction.Commit();
 
 
-using (var _context = new AppDbContext())
-{
-    var productDtos = _context.Products.ProjectTo<ProductDto>(ObjectMapper.Mapper.ConfigurationProvider).ToList();
-}
 
-using (var _context = new AppDbContext())
-{
-    //scaler-function 1.yol
-    var products = _context.Products.Select(p => new
-    {
-        name = p.Name,
-        studentCount = _context.GetStudentCountByAge(25)
-    }).ToList();
+//using (var _context = new AppDbContext())
+//{
+//    using var transaction = _context.Database.BeginTransaction();
 
-    //scaler-function 2.yol
-    SqlParameter ageSqlParameter = new("age", 25);
-    int total = _context.StudentTotals.FromSqlInterpolated($"select dbo.fc_student_teacher_count({ageSqlParameter}) as Total").First().Total;
-}
+//    Brand brand = new()
+//    {
+//        Name = "Seat"
+//    };
+
+//    _context.Brands.Add(brand);
+//    _context.SaveChanges();
+
+//    Vehicle vehicle = new()
+//    {
+//        Plate = "06BEU013",
+//        Year = "2018",
+//        BrandId = 23
+//    };
+
+//    _context.Vehicles.Add(vehicle);
+//    _context.SaveChanges();
+
+//    transaction.Commit();
+//}
+
+
+//using (var _context = new AppDbContext())
+//{
+//    var productDtos = _context.Products.ProjectTo<ProductDto>(ObjectMapper.Mapper.ConfigurationProvider).ToList();
+//}
+
+//using (var _context = new AppDbContext())
+//{
+//    //scaler-function 1.yol
+//    var products = _context.Products.Select(p => new
+//    {
+//        name = p.Name,
+//        studentCount = _context.GetStudentCountByAge(25)
+//    }).ToList();
+
+//    //scaler-function 2.yol
+//    SqlParameter ageSqlParameter = new("age", 25);
+//    int total = _context.StudentTotals.FromSqlInterpolated($"select dbo.fc_student_teacher_count({ageSqlParameter}) as Total").First().Total;
+//}
 
 using (var _context = new AppDbContext())
 {
@@ -64,12 +89,12 @@ using (var _context = new AppDbContext())
 using (var _context = new AppDbContext())
 {
 
-    SqlParameter entityIdSqlParameter = new("addedId", System.Data.SqlDbType.Int);
-    entityIdSqlParameter.Direction = System.Data.ParameterDirection.Output;
+    //SqlParameter entityIdSqlParameter = new("addedId", System.Data.SqlDbType.Int);
+    //entityIdSqlParameter.Direction = System.Data.ParameterDirection.Output;
 
-    _context.Database.ExecuteSqlInterpolated($"exec sp_insert_product 'cihat', 500, 23, {entityIdSqlParameter} out");
+    //_context.Database.ExecuteSqlInterpolated($"exec sp_insert_product 'cihat', 500, 23, {entityIdSqlParameter} out");
 
-    int id = (int)entityIdSqlParameter.Value;
+    //int id = (int)entityIdSqlParameter.Value;
 
     //SqlParameter sqlParameter = new("id", 4);
     //var products = _context.Products.FromSqlRaw("exec sp_get_products_by_id {0}", 4).ToList();

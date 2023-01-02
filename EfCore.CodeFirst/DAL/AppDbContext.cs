@@ -1,9 +1,21 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Data.Common;
 
 namespace EfCore.CodeFirst.DAL
 {
     public class AppDbContext : DbContext
     {
+        private readonly DbConnection _connection;
+
+        public AppDbContext()
+        {
+        }
+
+        public AppDbContext(DbConnection connection)
+        {
+            _connection = connection;
+        }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
@@ -23,7 +35,16 @@ namespace EfCore.CodeFirst.DAL
         {
             Initializer.Build();
             optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
-            optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+
+            if (_connection is default(DbConnection))
+            {
+                optionsBuilder.UseSqlServer(Initializer.Configuration.GetConnectionString("SqlCon"));
+            }
+            else
+            {
+                optionsBuilder.UseSqlServer(_connection);
+            }
+
             optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); //global olarak tracking kapatma.
         }
 
