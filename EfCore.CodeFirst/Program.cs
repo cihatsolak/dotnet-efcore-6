@@ -4,29 +4,50 @@ using System.Data.Common;
 
 Initializer.Build();
 
-DbConnection appDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("SqlCon"));
-DbConnection courseDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("CourseSqlCon"));
 
-using var _appDbContext = new AppDbContext(appDbConnection);
-using var appDbTransaction = _appDbContext.Database.BeginTransaction();
-
-_appDbContext.Brands.Add(new Brand
+using (var _context = new CourseDbContext())
 {
-    Name = "Transaction Model"
-});
+    using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
+    {
+        _context.Courses.Add(new Course
+        {
+            Name = "Test"
+        });
 
-_appDbContext.SaveChanges();
+        //var course = _context.Courses.Find(1);
+        //course.Name = "çiçek";
 
-using var _courseDbContext = new AppDbContext(appDbConnection);
-_courseDbContext.Database.UseTransaction(appDbTransaction.GetDbTransaction());
+        _context.SaveChanges();
 
-var course = _courseDbContext.Students.First();
-course.Name = "Transaction Mesut";
+        _transaction.Commit();
+    }
+}
 
-_courseDbContext.Students.Update(course);
-_courseDbContext.SaveChanges();
 
-appDbTransaction.Commit();
+
+//DbConnection appDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("SqlCon"));
+//DbConnection courseDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("CourseSqlCon"));
+
+//using var _appDbContext = new AppDbContext(appDbConnection);
+//using var appDbTransaction = _appDbContext.Database.BeginTransaction();
+
+//_appDbContext.Brands.Add(new Brand
+//{
+//    Name = "Transaction Model"
+//});
+
+//_appDbContext.SaveChanges();
+
+//using var _courseDbContext = new AppDbContext(appDbConnection);
+//_courseDbContext.Database.UseTransaction(appDbTransaction.GetDbTransaction());
+
+//var course = _courseDbContext.Students.First();
+//course.Name = "Transaction Mesut";
+
+//_courseDbContext.Students.Update(course);
+//_courseDbContext.SaveChanges();
+
+//appDbTransaction.Commit();
 
 
 
