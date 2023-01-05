@@ -7,7 +7,23 @@ Initializer.Build();
 
 using (var _context = new CourseDbContext())
 {
-    using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
+    using (var _transaction = _context.Database.BeginTransaction())
+    {
+        _context.Courses.Add(new Course
+        {
+            Name = "Test"
+        });
+
+        _context.SaveChanges();
+
+        _transaction.Commit();
+    }
+}
+
+
+using (var _context = new CourseDbContext())
+{
+    using (var _transaction = _context.Database.BeginTransaction())
     {
         _context.Courses.Add(new Course
         {
@@ -22,8 +38,6 @@ using (var _context = new CourseDbContext())
         _transaction.Commit();
     }
 }
-
-
 
 //DbConnection appDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("SqlCon"));
 //DbConnection courseDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("CourseSqlCon"));
