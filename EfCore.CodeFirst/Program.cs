@@ -8,6 +8,20 @@ Initializer.Build();
 // repetable read
 using (var _context = new CourseDbContext())
 {
+    using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.Snapshot))
+    {
+        var course1 = _context.Courses.AsNoTracking().ToList();
+
+
+        var course2 = _context.Courses.AsNoTracking().ToList();
+
+        _transaction.Commit();
+    }
+}
+
+// serializable
+using (var _context = new CourseDbContext())
+{
     using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
     {
         var course = _context.Courses.ToList();

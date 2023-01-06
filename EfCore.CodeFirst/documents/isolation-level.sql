@@ -24,3 +24,9 @@ ROLLBACK TRANSACTION CourseReadTransaction
 print 'transaction error'
 END CATCH
 
+-- snapshot
+
+alter database CourseDb
+set ALLOW_SNAPSHOT_ISOLATION on
+
+
