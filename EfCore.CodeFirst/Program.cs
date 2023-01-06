@@ -8,6 +8,17 @@ Initializer.Build();
 // repetable read
 using (var _context = new CourseDbContext())
 {
+    using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
+    {
+        var course = _context.Courses.ToList();
+
+        _transaction.Commit();
+    }
+}
+
+// repetable read
+using (var _context = new CourseDbContext())
+{
     using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.RepeatableRead))
     {
         var course = _context.Courses.Find(1);
