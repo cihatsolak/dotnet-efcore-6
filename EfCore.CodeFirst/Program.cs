@@ -5,9 +5,22 @@ using System.Data.Common;
 Initializer.Build();
 
 
+// repetable read
 using (var _context = new CourseDbContext())
 {
-    using (var _transaction = _context.Database.BeginTransaction())
+    using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.RepeatableRead))
+    {
+        var course = _context.Courses.Find(1);
+
+
+        _transaction.Commit();
+    }
+}
+
+// read committed
+using (var _context = new CourseDbContext())
+{
+    using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.ReadCommitted))
     {
         _context.Courses.Add(new Course
         {
@@ -20,10 +33,10 @@ using (var _context = new CourseDbContext())
     }
 }
 
-
+// read uncommitted
 using (var _context = new CourseDbContext())
 {
-    using (var _transaction = _context.Database.BeginTransaction())
+    using (var _transaction = _context.Database.BeginTransaction(System.Data.IsolationLevel.ReadUncommitted))
     {
         _context.Courses.Add(new Course
         {
