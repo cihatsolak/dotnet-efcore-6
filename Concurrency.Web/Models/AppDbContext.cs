@@ -9,6 +9,8 @@ namespace Concurrency.Web.Models
 
         }
 
+        public DbSet<Product> Products { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -17,6 +19,7 @@ namespace Concurrency.Web.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().HasKey(p => p.Id);
+            modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Product>().Property(p => p.Id).UseIdentityColumn(1, 1);
             modelBuilder.Entity<Product>().Property(p => p.Price).HasPrecision(18, 2);
 
