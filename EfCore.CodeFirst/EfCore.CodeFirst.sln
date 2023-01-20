@@ -12,7 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documents", "documents", "{
 		documents\store-procedures.sql = documents\store-procedures.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concurrency.Web", "..\Concurrency.Web\Concurrency.Web.csproj", "{764D55BE-2800-4B08-9C84-2AD879603C18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concurrency.Web", "..\Concurrency.Web\Concurrency.Web.csproj", "{764D55BE-2800-4B08-9C84-2AD879603C18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "V2", "V2", "{CADF7468-CC73-4133-8177-3327238A6B40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCore.CodeFirst.V2", "..\V2\EfCore.CodeFirst.V2\EfCore.CodeFirst.V2.csproj", "{95EBCC11-481F-496D-9C75-EE10F9462693}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,9 +32,16 @@ Global
 		{764D55BE-2800-4B08-9C84-2AD879603C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{764D55BE-2800-4B08-9C84-2AD879603C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{764D55BE-2800-4B08-9C84-2AD879603C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95EBCC11-481F-496D-9C75-EE10F9462693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95EBCC11-481F-496D-9C75-EE10F9462693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95EBCC11-481F-496D-9C75-EE10F9462693}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95EBCC11-481F-496D-9C75-EE10F9462693}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{95EBCC11-481F-496D-9C75-EE10F9462693} = {CADF7468-CC73-4133-8177-3327238A6B40}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E19737F-5A19-490B-887F-BF7B07DCA9CA}
