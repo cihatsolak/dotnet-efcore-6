@@ -1,4 +1,6 @@
-﻿namespace EfCore.CodeFirst.V2.Data
+﻿using EfCore.CodeFirst.V2.Data.Entities.Posts;
+
+namespace EfCore.CodeFirst.V2.Data
 {
     public sealed class FinanceDbContext : DbContext
     {
@@ -34,5 +36,9 @@
         }
 
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserDetail> UserDetails { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Tag> Tags { get; set; }
     }
 }
