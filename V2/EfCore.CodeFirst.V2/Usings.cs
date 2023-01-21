@@ -1,5 +1,6 @@
 ﻿global using EfCore.CodeFirst.V2.Data;
 global using EfCore.CodeFirst.V2.Data.Entities;
+global using EfCore.CodeFirst.V2.Data.Entities.Users;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
