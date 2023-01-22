@@ -1,11 +1,14 @@
-﻿using EfCore.CodeFirst.V2.Data.Entities.Posts;
-
-namespace EfCore.CodeFirst.V2.Data
+﻿namespace EfCore.CodeFirst.V2.Data
 {
     public sealed class FinanceDbContext : DbContext
     {
         public FinanceDbContext(DbContextOptions<FinanceDbContext> dbContextOptions) : base(dbContextOptions)
         {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,5 +45,6 @@ namespace EfCore.CodeFirst.V2.Data
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Shirt> Shirts { get; set; }
     }
 }
