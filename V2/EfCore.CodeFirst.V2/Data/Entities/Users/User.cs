@@ -7,5 +7,6 @@
         public int Age { get; set; }
 
         public UserDetail UserDetail { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }
