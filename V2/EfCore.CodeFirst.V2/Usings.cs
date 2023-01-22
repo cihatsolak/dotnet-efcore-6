@@ -2,6 +2,7 @@
 global using EfCore.CodeFirst.V2.Data.Entities;
 global using EfCore.CodeFirst.V2.Data.Entities.Posts;
 global using EfCore.CodeFirst.V2.Data.Entities.Users;
+global using EfCore.CodeFirst.V2.Data.Entities.Vehicles;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;

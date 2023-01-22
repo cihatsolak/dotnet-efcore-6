@@ -40,5 +40,7 @@ namespace EfCore.CodeFirst.V2.Data
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Brand> Brands { get; set; }
     }
 }
