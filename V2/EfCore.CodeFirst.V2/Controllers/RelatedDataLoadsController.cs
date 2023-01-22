@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace EfCore.CodeFirst.V2.Controllers
+﻿namespace EfCore.CodeFirst.V2.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

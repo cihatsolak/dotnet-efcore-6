@@ -1,4 +1,6 @@
-﻿namespace EfCore.CodeFirst.V2.Data
+﻿using EfCore.CodeFirst.V2.Data.Entities.Galleries;
+
+namespace EfCore.CodeFirst.V2.Data
 {
     public sealed class FinanceDbContext : DbContext
     {
@@ -46,5 +48,6 @@
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Shirt> Shirts { get; set; }
+        public DbSet<Gallery> Galleries { get; set; }
     }
 }

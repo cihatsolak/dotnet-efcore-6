@@ -1,5 +1,6 @@
 ﻿global using EfCore.CodeFirst.V2.Data;
 global using EfCore.CodeFirst.V2.Data.Entities;
+global using EfCore.CodeFirst.V2.Data.Entities.Galleries;
 global using EfCore.CodeFirst.V2.Data.Entities.Posts;
 global using EfCore.CodeFirst.V2.Data.Entities.Products;
 global using EfCore.CodeFirst.V2.Data.Entities.Users;
