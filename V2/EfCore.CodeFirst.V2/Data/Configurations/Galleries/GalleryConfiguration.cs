@@ -6,6 +6,8 @@
         {
             builder.ToTable(nameof(Gallery));
             builder.HasNoKey();
+
+            builder.Property(p => p.Url).IsUnicode(false);
         }
     }
 }
