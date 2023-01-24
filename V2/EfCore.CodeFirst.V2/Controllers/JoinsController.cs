@@ -58,5 +58,20 @@ namespace EfCore.CodeFirst.V2.Controllers
 
             return Ok();
         }
+
+        [HttpGet]
+        public IActionResult LeftOrRight()
+        {
+            var ug1 = from gallery in _context.Galleries
+                      join user in _context.Users on gallery.UserId equals user.Id into userTable
+                      from user in userTable.DefaultIfEmpty() //left-right join
+                      select new UserGalleryDto
+                      {
+                          Age = user == null ? 0 : user.Age,
+                          Year = gallery.Year
+                      };
+
+            return Ok();
+        }
     }
 }
