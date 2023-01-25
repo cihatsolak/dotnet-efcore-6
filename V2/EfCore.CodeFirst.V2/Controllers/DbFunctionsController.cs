@@ -20,5 +20,13 @@
 
             return Ok();
         }
+
+        [HttpGet]
+        public IActionResult TableValuedV2()
+        {
+            _context.GetUserGalleryByAge(19).Where(p => p.Name.StartsWith("M")).ToList();
+           
+            return Ok();
+        }
     }
 }

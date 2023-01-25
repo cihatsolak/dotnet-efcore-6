@@ -13,6 +13,8 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDbFunction(typeof(FinanceDbContext).GetMethod(nameof(GetUserGalleryByAge), new[] { typeof(int) })).HasName("fc_user_gallery_by_age");
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
@@ -48,5 +50,7 @@
         public DbSet<Shirt> Shirts { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
         public DbSet<UserGalleryFull> UserGalleryFull { get; set; }
+
+        public IQueryable<UserGalleryFull> GetUserGalleryByAge(int age) => FromExpression(() => GetUserGalleryByAge(age));
     }
 }
