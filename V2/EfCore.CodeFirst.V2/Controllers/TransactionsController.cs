@@ -53,5 +53,33 @@ namespace EfCore.CodeFirst.V2.Controllers
 
             return Ok();
         }
+
+        [HttpGet]
+        public IActionResult TwoRelatedTablesTransaction()
+        {
+            using var transaction = _context.Database.BeginTransaction();
+
+            UserDetail userDetail = new()
+            {
+                PhoneNumber = "5000000000"
+            };
+
+            _context.UserDetails.Add(userDetail);
+            _context.SaveChanges(); // <-- SaveChanges()
+
+            User user = new()
+            {
+                Name = "Cihat",
+                Age = 1,
+                UserDetail = userDetail
+            };
+
+            _context.Users.Add(user);
+            _context.SaveChanges();  // <-- 2.kez SaveChanges()
+
+            transaction.Commit();
+
+            return Ok();
+        }
     }
 }
