@@ -15,6 +15,8 @@
         {
             modelBuilder.HasDbFunction(typeof(FinanceDbContext).GetMethod(nameof(GetUserGalleryByAge), new[] { typeof(int) })).HasName("fc_user_gallery_by_age");
 
+            modelBuilder.HasDbFunction(typeof(FinanceDbContext).GetMethod(nameof(GetUserCountByAge), new[] { typeof(int) })).HasName("fc_user_count_by_age");
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
@@ -40,6 +42,11 @@
             return base.SaveChanges();
         }
 
+        public int GetUserCountByAge(int age)
+        {
+            throw new NotSupportedException("Direkt kullanıma uygun değildir. Ef Core tarafından desteklemez. Linq metot içerisinde kullanmalısınız.");
+        }
+
         public DbSet<Bank> Banks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
@@ -50,6 +57,7 @@
         public DbSet<Shirt> Shirts { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
         public DbSet<UserGalleryFull> UserGalleryFull { get; set; }
+        public DbSet<UserTotal> UserTotal { get; set; }
 
         public IQueryable<UserGalleryFull> GetUserGalleryByAge(int age) => FromExpression(() => GetUserGalleryByAge(age));
     }

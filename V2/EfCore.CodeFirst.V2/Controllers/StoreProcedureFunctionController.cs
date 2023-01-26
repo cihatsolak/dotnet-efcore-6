@@ -1,4 +1,4 @@
-﻿using System.Data;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace EfCore.CodeFirst.V2.Controllers
 {
@@ -49,6 +49,8 @@ namespace EfCore.CodeFirst.V2.Controllers
             };
 
             _context.Database.ExecuteSqlInterpolated($"EXEC SP_User_InsertUser 'Cihat', 60, {addedUserId} out");
+
+            
 
             int id = (int)addedUserId.Value;
 
