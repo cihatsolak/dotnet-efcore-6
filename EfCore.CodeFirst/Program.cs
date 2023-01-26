@@ -78,28 +78,27 @@ using (var _context = new CourseDbContext())
 }
 
 //DbConnection appDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("SqlCon"));
-//DbConnection courseDbConnection = new SqlConnection(Initializer.Configuration.GetConnectionString("CourseSqlCon"));
 
-//using var _appDbContext = new AppDbContext(appDbConnection);
-//using var appDbTransaction = _appDbContext.Database.BeginTransaction();
+//using var _appDbContext1 = new AppDbContext(appDbConnection);
+//using var appDbTransaction1 = _appDbContext1.Database.BeginTransaction();
 
-//_appDbContext.Brands.Add(new Brand
+//_appDbContext1.Brands.Add(new Brand
 //{
 //    Name = "Transaction Model"
 //});
 
-//_appDbContext.SaveChanges();
+//_appDbContext1.SaveChanges();
 
-//using var _courseDbContext = new AppDbContext(appDbConnection);
-//_courseDbContext.Database.UseTransaction(appDbTransaction.GetDbTransaction());
+//using var _appDbContext2 = new AppDbContext(appDbConnection);
+//_appDbContext2.Database.UseTransaction(appDbTransaction1.GetDbTransaction());
 
-//var course = _courseDbContext.Students.First();
+//var course = _appDbContext2.Students.First();
 //course.Name = "Transaction Mesut";
 
-//_courseDbContext.Students.Update(course);
-//_courseDbContext.SaveChanges();
+//_appDbContext2.Students.Update(course);
+//_appDbContext2.SaveChanges();
 
-//appDbTransaction.Commit();
+//appDbTransaction1.Commit();
 
 
 
