@@ -1,4 +1,6 @@
-﻿global using EfCore.CodeFirst.V2.Data;
+﻿global using AutoMapper;
+global using AutoMapper.QueryableExtensions;
+global using EfCore.CodeFirst.V2.Data;
 global using EfCore.CodeFirst.V2.Data.Entities;
 global using EfCore.CodeFirst.V2.Data.Entities.Galleries;
 global using EfCore.CodeFirst.V2.Data.Entities.Posts;
@@ -6,6 +8,7 @@ global using EfCore.CodeFirst.V2.Data.Entities.Products;
 global using EfCore.CodeFirst.V2.Data.Entities.Users;
 global using EfCore.CodeFirst.V2.Data.Entities.Vehicles;
 global using EfCore.CodeFirst.V2.Data.Functions;
+global using EfCore.CodeFirst.V2.Models;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Data.SqlClient;
 global using Microsoft.EntityFrameworkCore;
