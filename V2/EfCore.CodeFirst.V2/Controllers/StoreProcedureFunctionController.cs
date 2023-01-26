@@ -1,4 +1,6 @@
-﻿namespace EfCore.CodeFirst.V2.Controllers
+﻿using System.Data;
+
+namespace EfCore.CodeFirst.V2.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -25,6 +27,32 @@
             _context.Users.FromSqlInterpolated($"EXEC User_GetUserById {sqlParameter}").ToList();
 
             return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult AddUser()
+        {
+            //CREATE PROCEDURE [dbo].[SP_User_InsertUser]
+            // @Name varchar(100),
+            // @Age int,
+            // @Id int output
+            //AS
+            //BEGIN
+            // INSERT INTO [User]([Name], Age) VALUES (@Name, @Age)
+            // SET @Id=SCOPE_IDENTITY();
+            // RETURN @Id
+            //END
+
+            SqlParameter addedUserId = new("Id", SqlDbType.Int)
+            {
+                Direction = ParameterDirection.Output
+            };
+
+            _context.Database.ExecuteSqlInterpolated($"EXEC SP_User_InsertUser 'Cihat', 60, {addedUserId} out");
+
+            int id = (int)addedUserId.Value;
+
+            return Ok(id);
         }
     }
 }
