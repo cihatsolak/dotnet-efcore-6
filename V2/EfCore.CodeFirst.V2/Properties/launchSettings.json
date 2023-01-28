@@ -6,6 +6,10 @@
     "iisExpress": {
       "applicationUrl": "http://localhost:44487",
       "sslPort": 44300
+    },
+    "iis": {
+      "applicationUrl": "http://localhost/EfCoreCodeFirst",
+      "sslPort": 0
     }
   },
   "profiles": {
@@ -33,6 +37,14 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS": {
+      "commandName": "IIS",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost/EfCoreCodeFirst",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
